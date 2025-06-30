@@ -1,2 +1,5 @@
 /.env
 /venv
+oop.py
+**.db
+__pycache__
