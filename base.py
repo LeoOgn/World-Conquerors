@@ -26,5 +26,6 @@ create_characters = """
     );
 """
 cursor = connection.cursor()
+cursor.execute(create_users)
 cursor.execute(create_characters)
 connection.commit()

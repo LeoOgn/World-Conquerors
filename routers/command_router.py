@@ -1,4 +1,4 @@
-from handlers import StartHandler
+from handlers import StartHandler, CreateCharacterState
 from aiogram import Dispatcher
 from aiogram.filters.command import Command
 
@@ -11,3 +11,4 @@ class CommandRouter:
 
     def _setup_routes(self):
         self.dp.message.register(self.start_handler.start_command, Command("start"))
+        self.dp.message.register(self.start_handler.get_character_name, CreateCharacterState.name)

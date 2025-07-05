@@ -15,8 +15,10 @@ dp = Dispatcher()
 
 connection = connect("db.db")
 user_repository = UserRepository(connection)
+character_repository = CharacterRepository(connection)
 user_service = UserService(user_repository)
-start_handler = StartHandler(user_service)
+character_service = CharacterService(character_repository)
+start_handler = StartHandler(user_service, character_service)
 command_router = CommandRouter(dp, start_handler)
 
 async def start():
