@@ -1,4 +1,5 @@
 from sqlite3 import connect
+from seeds.location_seed import seed_locations
 
 
 connection = connect("db.db")
@@ -25,7 +26,32 @@ create_characters = """
         FOREIGN KEY (user_id) REFERENCES users (id)
     );
 """
+create_locations = """
+    CREATE TABLE IF NOT EXISTS locations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title VARCHAR(255),
+        level_from INTEGER,
+        level_to INTEGER,
+        created DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+"""
+create_mobs = """
+    CREATE TABLE IF NOT EXISTS mobs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name VARCHAR(255),
+        streight INTEGER DEFAULT 0,
+        agility INTEGER DEFAULT 0,
+        physique INTEGER DEFAULT 0,
+        level INTEGER DEFAULT 1,
+        location_id INTEGER,
+        FOREIGN KEY (location_id) REFERENCES locations (id)
+    );
+"""
 cursor = connection.cursor()
 cursor.execute(create_users)
 cursor.execute(create_characters)
+cursor.execute(create_locations)
+cursor.execute(create_mobs)
 connection.commit()
+
+seed_locations()
