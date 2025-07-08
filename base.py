@@ -1,5 +1,6 @@
 from sqlite3 import connect
 from seeds.location_seed import seed_locations
+from seeds.mob_seed import seed_mobs
 
 
 connection = connect("db.db")
@@ -14,9 +15,9 @@ create_characters = """
     CREATE TABLE IF NOT EXISTS characters (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(255),
-        streight INTEGER DEFAULT 1,
-        agility INTEGER DEFAULT 1,
-        physique INTEGER DEFAULT 1,
+        streight INTEGER DEFAULT 0,
+        agility INTEGER DEFAULT 0,
+        physique INTEGER DEFAULT 0,
         level INTEGER DEFAULT 1,
         balance INTEGER DEFAULT 0,
         experience INTEGER DEFAULT 0,
@@ -55,3 +56,4 @@ cursor.execute(create_mobs)
 connection.commit()
 
 seed_locations()
+seed_mobs()

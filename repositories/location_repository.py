@@ -6,6 +6,12 @@ class LocationRepository:
     def __init__(self, connection: Connection):
         self.connection = connection
 
+    def clear(self):
+        sql = "DELETE FROM locations"
+        cursor = self.connection.cursor()
+        cursor.execute(sql)
+        self.connection.commit()
+
     def create(self, title: str, level_from: str, level_to: int):
         sql = "INSERT INTO locations (title, level_from, level_to) VALUES (?, ?, ?)"
         cursor = self.connection.cursor()
