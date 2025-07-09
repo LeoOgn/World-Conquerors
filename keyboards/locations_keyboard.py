@@ -7,6 +7,7 @@ from typing import List
 
 class LocationCallback(CallbackData, prefix="location"):
     id: int
+    title: str
     
 
 
@@ -15,7 +16,7 @@ def locations_keyboard(locations: List[Location]) -> types.InlineKeyboardMarkup:
     for location in locations:
         builder.button(
             text=f"{location.title} ({location.level_from} - {location.level_to})", 
-            callback_data=LocationCallback(id=location.id)
+            callback_data=LocationCallback(id=location.id, title=location.title)
         )
     builder.adjust(1)
     return builder.as_markup()

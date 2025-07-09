@@ -17,3 +17,6 @@ class MobRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql)
         return cursor.fetchall()
+    
+    def get_by_location_id(self, location_id: int):
+        ...

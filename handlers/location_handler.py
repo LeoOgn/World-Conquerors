@@ -1,7 +1,7 @@
 from services import LocationService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import locations_keyboard
+from keyboards import locations_keyboard, LocationCallback
 
 
 class LocationHandler:
@@ -15,4 +15,10 @@ class LocationHandler:
             reply_markup=locations_keyboard(locations)
         )
     
-    
+    async def choose_location(self, callback: types.CallbackQuery, callback_data: LocationCallback):
+        location_id = callback_data.id
+        location_title = callback_data.title
+        await callback.message.edit_text(
+            f"Вы вошли в локацию {location_title}",
+            reply_markup=None
+        )
