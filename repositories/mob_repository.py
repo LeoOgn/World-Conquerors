@@ -1,5 +1,15 @@
 from sqlite3 import Connection, connect
 from typing import List
+from pydantic import BaseModel
+
+class Mob(BaseModel):
+    id: int
+    name: str
+    streight: int
+    agility: int
+    phisyque: int
+    level: int
+    location_id: int
 
 
 class MobRepository:
@@ -19,4 +29,12 @@ class MobRepository:
         return cursor.fetchall()
     
     def get_by_location_id(self, location_id: int):
-        ...
+        sql = "SELECT * FROM mobs WHERE location_id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (location_id,))
+    
+        mobs = cursor.fetchall()
+        return [
+            Mob(**{key : mob[i] for i, key in enumerate(Mob.model_fields.keys())})
+            for mob in mobs
+        ]

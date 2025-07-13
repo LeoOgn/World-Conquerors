@@ -1,7 +1,7 @@
 from services import LocationService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import locations_keyboard, LocationCallback
+from keyboards import locations_keyboard, LocationCallback, prefight_keyboard
 
 
 class LocationHandler:
@@ -18,7 +18,8 @@ class LocationHandler:
     async def choose_location(self, callback: types.CallbackQuery, callback_data: LocationCallback):
         location_id = callback_data.id
         location_title = callback_data.title
+        mob = self.location_service.get_random_mob(location_id)
         await callback.message.edit_text(
-            f"Вы вошли в локацию {location_title}",
-            reply_markup=None
+            f"Вы вошли в локацию {location_title}\nВы встретили {mob.name} ({mob.level} уровень)",
+            reply_markup=prefight_keyboard(mob)
         )
