@@ -38,3 +38,11 @@ class MobRepository:
             Mob(**{key : mob[i] for i, key in enumerate(Mob.model_fields.keys())})
             for mob in mobs
         ]
+    
+    def get_by_id(self, mob_id: int) -> Mob:
+        sql = "SELECT * FROM mobs WHERE id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (mob_id,))
+        mob = cursor.fetchone()
+        return Mob(**{key : mob[i] for i, key in enumerate(Mob.model_fields.keys())})
+    

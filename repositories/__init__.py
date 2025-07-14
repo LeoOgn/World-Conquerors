@@ -1,5 +1,5 @@
 from .user_repository import UserRepository
-from .character_repository import CharacterRepository
+from .character_repository import CharacterRepository, Character
 from .location_repository import LocationRepository, Location
 from .mob_repository import MobRepository, Mob
 
@@ -10,5 +10,6 @@ __all__ = [
     "LocationRepository",
     "Location",
     "MobRepository",
-    "Mob"
+    "Mob",
+    "Character"
 ]

@@ -1,5 +1,16 @@
 from sqlite3 import Connection, connect
+from pydantic import BaseModel
 
+class Character(BaseModel):
+    id: int
+    name: str
+    streight: int
+    agility: int
+    phisyque: int
+    level: int
+    experience: int
+    balance: int
+    current_health: int
 
 class CharacterRepository:
     def __init__(self, connection: Connection):
@@ -11,4 +22,10 @@ class CharacterRepository:
         cursor.execute(sql, (name, user_id))
         self.connection.commit()
 
+    def get_by_user_id(self, user_id: int) -> Character:
+        sql = "SELECT * FROM user WHERE user_id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (user_id,))
+        character = cursor.fetchone()
+        return Character(**{key : character[i] for i, key in enumerate(Character.model_fields.keys())})
     
