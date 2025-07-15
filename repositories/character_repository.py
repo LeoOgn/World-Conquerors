@@ -23,7 +23,7 @@ class CharacterRepository:
         self.connection.commit()
 
     def get_by_user_id(self, user_id: int) -> Character:
-        sql = "SELECT * FROM user WHERE user_id = ?"
+        sql = "SELECT * FROM characters WHERE user_id = ?"
         cursor = self.connection.cursor()
         cursor.execute(sql, (user_id,))
         character = cursor.fetchone()

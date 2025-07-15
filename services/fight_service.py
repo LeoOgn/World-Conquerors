@@ -3,6 +3,8 @@ from pydantic import BaseModel
 
 class FightInfo(BaseModel):
     mob: Mob
+    character: Character
+    mob_health: int
 
 
 class FightService:
@@ -14,3 +16,11 @@ class FightService:
     def add_fight(self, player_id: int, mob_id: int):
         mob = self.mob_repository.get_by_id(mob_id)
         character = self.character_repository.get_by_user_id(player_id)
+        self.fights[player_id] = FightInfo(
+            mob = mob,
+            character=character,
+            mob_health=mob.phisyque*5
+        )
+
+    def get_fight(self, player_id: int) -> FightInfo:
+        return self.fights.get(player_id)
