@@ -6,13 +6,12 @@ from repositories import Mob
 
 class FightCallback(CallbackData, prefix="fight"):
     action: str
-    mob_id: int | None = None
     
 
 
-def fight_keyboard(mob: Mob) -> types.InlineKeyboardMarkup:
+def fight_keyboard() -> types.InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    builder.button(text="Нанести удар", callback_data=FightCallback(action="fight", mob_id=mob.id))
-    builder.button(text="Использовать дополнительные предметы", callback_data=FightCallback(action="search"))
+    builder.button(text="Нанести удар", callback_data=FightCallback(action="hit"))
+    builder.button(text="Использовать дополнительные предметы", callback_data=FightCallback(action="use_item"))
     builder.adjust(2)
     return builder.as_markup()

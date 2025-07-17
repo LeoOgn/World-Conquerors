@@ -32,5 +32,5 @@ class LocationHandler:
             fight_info = self.fight_service.get_fight(callback.from_user.id)
             await callback.message.edit_text(
                 f"Вы приняли бой с {fight_info.mob.name}\nТекущее здоровье противника: {fight_info.mob_health}\nВаше текущие здоровье: {fight_info.character.current_health}\nДа начнется бой!", 
-                reply_markup=fight_keyboard(fight_info.mob)
+                reply_markup=fight_keyboard()
             )

@@ -28,4 +28,10 @@ class CharacterRepository:
         cursor.execute(sql, (user_id,))
         character = cursor.fetchone()
         return Character(**{key : character[i] for i, key in enumerate(Character.model_fields.keys())})
+
+    def update_character_health(self, new_value: int, character_id: int):
+        sql = "UPDATE characters SET current_health = ? WHERE id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (new_value, character_id))
+        self.connection.commit()
     

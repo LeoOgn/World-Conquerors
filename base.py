@@ -56,4 +56,4 @@ cursor.execute(create_mobs)
 connection.commit()
 
 seed_locations()
-seed_mobs()
+seed_mobs(start=5, end=9)

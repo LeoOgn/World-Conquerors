@@ -24,3 +24,14 @@ class FightService:
 
     def get_fight(self, player_id: int) -> FightInfo:
         return self.fights.get(player_id)
+
+    def on_hit(self, player_id: int) -> FightInfo:
+        fight = self.get_fight(player_id)
+        mob_dmg = fight.character.streight*5 - fight.mob.phisyque
+        fight.mob_health -= mob_dmg
+
+        character_dmg = fight.mob.streight*5 - fight.character.phisyque
+        fight.character.current_health -= character_dmg
+
+        self.character_repository.update_character_health(fight.character.current_health, fight.character.current_health)
+        

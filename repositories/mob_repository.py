@@ -2,6 +2,7 @@ from sqlite3 import Connection, connect
 from typing import List
 from pydantic import BaseModel
 
+
 class Mob(BaseModel):
     id: int
     name: str
