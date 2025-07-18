@@ -11,16 +11,17 @@ class Mob(BaseModel):
     phisyque: int
     level: int
     location_id: int
+    exp: int
 
 
 class MobRepository:
     def __init__(self, connection: Connection):
         self.connection = connection
 
-    def create(self, name: str, streight: int, agility: int, physique: int, level: int, location_id: int):
-        sql = "INSERT INTO mobs (name, streight, agility, physique, level, location_id) VALUES (?, ?, ?, ?, ?, ?)"
+    def create(self, name: str, streight: int, agility: int, physique: int, level: int, location_id: int, exp: int):
+        sql = "INSERT INTO mobs (name, streight, agility, physique, level, location_id, exp) VALUES (?, ?, ?, ?, ?, ?, ?)"
         cursor = self.connection.cursor()
-        cursor.execute(sql, (name, streight, agility, physique, level, location_id))
+        cursor.execute(sql, (name, streight, agility, physique, level, location_id, exp))
         self.connection.commit()
 
     def get_all(self) -> List[tuple]:

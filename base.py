@@ -45,6 +45,7 @@ create_mobs = """
         physique INTEGER DEFAULT 0,
         level INTEGER DEFAULT 1,
         location_id INTEGER,
+        exp INTEGER DEFAULT 0,
         FOREIGN KEY (location_id) REFERENCES locations (id)
     );
 """

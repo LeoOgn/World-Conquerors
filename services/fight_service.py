@@ -2,6 +2,7 @@ from repositories import MobRepository, Mob, CharacterRepository, Character
 from pydantic import BaseModel
 
 class FightInfo(BaseModel):
+    status: str = "in_process"
     mob: Mob
     character: Character
     mob_health: int
@@ -34,4 +35,22 @@ class FightService:
         fight.character.current_health -= character_dmg
 
         self.character_repository.update_character_health(fight.character.current_health, fight.character.current_health)
+
+        if fight.mob_health <= 0 and fight.character.current_health <= 0:
+            gain_exp = fight.mob.exp
+            fight.character.experience += gain_exp
+            fight.status = "draw"
+            return fight
         
+        if fight.mob_health <= 0 and fight.character.current_health > 0:
+            gain_exp = fight.mob.exp
+            fight.character.experience += gain_exp
+            fight.status = "win"
+            return fight
+        
+        if fight.mob_health > 0 and fight.character.current_health <= 0:
+            fight.character.experience = 0
+            fight.status = "loose"
+            return fight
+
+        return fight

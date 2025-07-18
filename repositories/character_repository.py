@@ -31,6 +31,8 @@ class CharacterRepository:
 
     def update_character_health(self, new_value: int, character_id: int):
         sql = "UPDATE characters SET current_health = ? WHERE id = ?"
+        if new_value < 0:
+            new_value = 0
         cursor = self.connection.cursor()
         cursor.execute(sql, (new_value, character_id))
         self.connection.commit()
