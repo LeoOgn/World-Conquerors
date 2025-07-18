@@ -48,12 +48,30 @@ create_mobs = """
         FOREIGN KEY (location_id) REFERENCES locations (id)
     );
 """
+create_equipment = """
+    CREATE TABLE IF NOT EXISTS equipment (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title VARCHAR(255),
+        bonus_streight INTEGER DEFAULT 0,
+        bonus_agility INTEGER DEFAULT 0,
+        bonus_physique INTEGER DEFAULT 0,
+        must_level INTEGER DEFAULT 1,
+        must_physique INTEGER DEFAULT 0,
+        must_streight INTEGER DEFAULT 0,
+        must_agility INTEGER DEFAULT 0,
+        attack INTEGER DEFAULT 0,
+        defend INTEGER DEFAULT 0,
+        price INTEGER DEFAULT 0,
+        created DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+"""
 cursor = connection.cursor()
 cursor.execute(create_users)
 cursor.execute(create_characters)
 cursor.execute(create_locations)
 cursor.execute(create_mobs)
+cursor.execute(create_equipment)
 connection.commit()
 
 seed_locations()
-seed_mobs(start=5, end=9)
+seed_mobs()
