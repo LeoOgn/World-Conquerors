@@ -17,9 +17,10 @@ class LocationHandler:
             reply_markup=locations_keyboard(locations)
         )
     
-    async def choose_location(self, callback: types.CallbackQuery, callback_data: LocationCallback):
+    async def choose_location(self, callback: types.CallbackQuery, callback_data: LocationCallback, state: FSMContext):
         location_id = callback_data.id
         location_title = callback_data.title
+        await state.update_data(location_id=location_id)
         mob = self.location_service.get_random_mob(location_id)
         await callback.message.edit_text(
             f"Вы вошли в локацию {location_title}\nВы встретили {mob.name} ({mob.level} уровень)",

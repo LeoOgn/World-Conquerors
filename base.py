@@ -63,6 +63,7 @@ create_equipment = """
         attack INTEGER DEFAULT 0,
         defend INTEGER DEFAULT 0,
         price INTEGER DEFAULT 0,
+        rare VARCHAR(255),
         created DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 """
