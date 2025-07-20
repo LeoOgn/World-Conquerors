@@ -8,8 +8,8 @@ class Character(BaseModel):
     agility: int
     phisyque: int
     level: int
-    experience: int
     balance: int
+    experience: int
     current_health: int
 
 class CharacterRepository:
