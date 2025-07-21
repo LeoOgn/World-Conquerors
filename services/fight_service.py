@@ -26,12 +26,19 @@ class FightService:
     def get_fight(self, player_id: int) -> FightInfo:
         return self.fights.get(player_id)
 
+    def _can_level_up(self, character: Character) -> bool:
+        must_exp = 2 ** character.level
+        return character.experience >= must_exp
     def on_hit(self, player_id: int) -> FightInfo:
         fight = self.get_fight(player_id)
         mob_dmg = fight.character.streight*5 - fight.mob.phisyque
+        if mob_dmg < 0: mob_dmg = 0
+        print("mob_dmg", mob_dmg)
         fight.mob_health -= mob_dmg
 
         character_dmg = fight.mob.streight*5 - fight.character.phisyque
+        if character_dmg < 0: character_dmg = 0
+        print("character_dmg", character_dmg)
         fight.character.current_health -= character_dmg
 
         self.character_repository.update_character_health(fight.character.current_health, fight.character.current_health)
@@ -39,13 +46,21 @@ class FightService:
         if fight.mob_health <= 0 and fight.character.current_health <= 0:
             gain_exp = fight.mob.exp
             fight.character.experience += gain_exp
+            self.character_repository.update_character_experience(fight.character.experience, fight.character.id)
+            if self._can_level_up(fight.character):
+                self.character_repository.level_up(player_id)
             fight.status = "draw"
+            fight.character = self.character_repository.get_by_user_id(player_id)
             return fight
         
         if fight.mob_health <= 0 and fight.character.current_health > 0:
             gain_exp = fight.mob.exp
             fight.character.experience += gain_exp
+            self.character_repository.update_character_experience(fight.character.experience, fight.character.id)
+            if self._can_level_up(fight.character):
+                self.character_repository.level_up(player_id)
             fight.status = "win"
+            fight.character = self.character_repository.get_by_user_id(player_id)
             return fight
         
         if fight.mob_health > 0 and fight.character.current_health <= 0:

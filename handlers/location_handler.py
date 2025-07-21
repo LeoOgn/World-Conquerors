@@ -27,11 +27,19 @@ class LocationHandler:
             reply_markup=prefight_keyboard(mob)
         )
 
-    async def prefight_handler(self, callback: types.CallbackQuery, callback_data: PrefightCallback):
+    async def prefight_handler(self, callback: types.CallbackQuery, callback_data: PrefightCallback, state: FSMContext):
         if callback_data.action == "fight":
             self.fight_service.add_fight(callback.from_user.id, callback_data.mob_id)
             fight_info = self.fight_service.get_fight(callback.from_user.id)
             await callback.message.edit_text(
                 f"Вы приняли бой с {fight_info.mob.name}\nТекущее здоровье противника: {fight_info.mob_health}\nВаше текущие здоровье: {fight_info.character.current_health}\nДа начнется бой!", 
                 reply_markup=fight_keyboard()
+            )
+        elif callback_data.action == "search":
+            data = await state.get_data()
+            location_id = data.get("location_id")
+            mob = self.location_service.get_random_mob(location_id)
+            await callback.message.edit_text(
+                f"Вы проигнорировали прошлого монстра и продолжили свой путь, путешествуя дальше, вы наткнулись на {mob.name} ({mob.level} уровень)",
+                reply_markup=prefight_keyboard(mob)
             )

@@ -11,6 +11,7 @@ class Character(BaseModel):
     balance: int
     experience: int
     current_health: int
+    available_scores: int
 
 class CharacterRepository:
     def __init__(self, connection: Connection):
@@ -36,4 +37,21 @@ class CharacterRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (new_value, character_id))
         self.connection.commit()
+
+    def level_up(self, user_id: int):
+        sql = "UPDATE characters SET level = ?, experience = ?, available_scores = ? WHERE character_id = ?"
+        character = self.get_by_user_id(user_id)
+        experience = character.experience - 2 ** character.level
+        level = character.level + 1
+        scores = character.available_scores + 5
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (level, experience, scores, character.id,))
+        self.connection.commit()
+
+    def update_character_experience(self, new_value: int, character_id: int):
+        sql = "UPDATE characters SET experience = ? WHERE id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (new_value, character_id))
+        self.connection.commit()
+
     

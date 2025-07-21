@@ -22,6 +22,7 @@ create_characters = """
         balance INTEGER DEFAULT 0,
         experience INTEGER DEFAULT 0,
         current_health INTEGER DEFAULT 5,
+        available_scores INTEGER DEFAULT 5,
         user_id INTEGER NOT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id)
