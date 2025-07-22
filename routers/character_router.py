@@ -1,5 +1,6 @@
 from handlers import CharacterHandler
 from aiogram import Dispatcher, F
+from keyboards import CharacterCallback
 
 
 
@@ -11,3 +12,4 @@ class CharacterRouter:
 
     def _setup_routes(self):
         self.dp.message.register(self.character_handler.character_handler, F.text == "Персонаж 🧔🏻‍♀️")
+        self.dp.callback_query.register(self.character_handler.character_menu_handler, CharacterCallback.filter())
