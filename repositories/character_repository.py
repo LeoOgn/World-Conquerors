@@ -6,7 +6,7 @@ class Character(BaseModel):
     name: str
     streight: int
     agility: int
-    phisyque: int
+    physique: int
     level: int
     balance: int
     experience: int
@@ -54,4 +54,15 @@ class CharacterRepository:
         cursor.execute(sql, (new_value, character_id))
         self.connection.commit()
 
+    def update_character_scores(self, character: Character):
+        sql = "UPDATE characters SET streight = ?, agility = ?, physique = ?, available_scores = ? WHERE id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (
+            character.streight, 
+            character.agility, 
+            character.phisyque, 
+            character.available_scores,
+            character.id
+        ))
+        self.connection.commit()
     

@@ -1,4 +1,5 @@
-from repositories import CharacterRepository
+from repositories import CharacterRepository, Character
+from keyboards import NewScores
 
 
 class CharacterService:
@@ -11,3 +12,12 @@ class CharacterService:
 
     def get_by_user_id(self, user_id:int):
         return self.character_repo.get_by_user_id(user_id)
+    
+    def update_scores(self, character: Character, scores: NewScores):
+        character.streight += scores.streight
+        character.agility += scores.agility
+        character.physique += scores.physique
+        character.current_health = character.physique * 5
+
+        self.character_repo.update_character_scores(character)
+        self.character_repo.update_character_health(character.current_health, character.id)

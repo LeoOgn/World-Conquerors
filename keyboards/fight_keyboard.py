@@ -13,5 +13,5 @@ def fight_keyboard() -> types.InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(text="Нанести удар", callback_data=FightCallback(action="hit"))
     builder.button(text="Использовать дополнительные предметы", callback_data=FightCallback(action="use_item"))
-    builder.adjust(2)
+    builder.adjust(1)
     return builder.as_markup()

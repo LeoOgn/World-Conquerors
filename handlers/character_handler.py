@@ -1,7 +1,8 @@
 from services import CharacterService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import character_keyboard, add_scores_keyboard, NewScores, CharacterCallback
+from keyboards import (character_keyboard, add_scores_keyboard, NewScores, CharacterCallback, AddScoresCallback)
+from repositories import Character
 
 
 class CharacterHandler:
@@ -10,12 +11,72 @@ class CharacterHandler:
 
     async def character_handler(self, msg: types.Message):
         character = self.character_service.get_by_user_id(msg.from_user.id)
-        await msg.answer(f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.phisyque}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores))
+        await msg.answer(f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores))
 
-    async def character_menu_handler(self, callback: types.CallbackQuery, callback_data: CharacterCallback):
+    async def character_menu_handler(
+            self, callback: types.CallbackQuery, callback_data: CharacterCallback, state: FSMContext
+    ):
         if callback_data.action == "score_up":
             character = self.character_service.get_by_user_id(callback.from_user.id)
+            scores = NewScores()
+            await state.update_data(scores=scores, character=character)
             await callback.message.edit_text(
                 text="Распределите характеристики", 
-                reply_markup=add_scores_keyboard(character, NewScores())
+                reply_markup=add_scores_keyboard(character, scores)
             )
+    
+    async def score_up_handler(self, callback: types.CallbackQuery, callback_data: AddScoresCallback, state: FSMContext):
+        data = await state.get_data()
+        character: Character = data.get("character")
+        scores: NewScores = data.get("scores")
+
+        is_changed = False
+
+        if callback_data.action == "inc":
+            if character.available_scores > 0:
+                character.available_scores -= 1
+                is_changed = True
+                match callback_data.feature:
+                    case "streight":
+                        scores.streight += 1
+                    case "agility":
+                        scores.agility += 1
+                    case "physique":
+                        scores.physique += 1
+            else:
+                await callback.answer("Свободных очков больше нет")
+        elif callback_data.action == "dec":
+            match callback_data.feature:
+                case "streight":
+                    if scores.streight > 0:
+                        scores.streight -= 1
+                        character.available_scores += 1
+                        is_changed = True
+                    else:
+                        await callback.answer("Нельзя больше уменьшить")
+                case "agility":
+                    if scores.agility > 0:
+                        scores.agility -= 1
+                        character.available_scores += 1
+                        is_changed = True
+                    else:
+                        await callback.answer("Нельзя больше уменьшить")
+                case "physique":
+                    if scores.physique > 0:
+                        scores.physique -= 1
+                        character.available_scores += 1
+                        is_changed = True
+                    else:
+                        await callback.answer("Нельзя больше уменьшить")
+        elif callback_data.action == "done":
+            self.character_service.update_scores(character, scores)
+            await callback.message.edit_text(text="Вы хорошо прокачались, ваши характеристики изменены!")
+        
+        if is_changed and callback_data.action in ("inc", "dec"):
+            await state.update_data(character=character, scores=scores)
+            await callback.message.edit_reply_markup(
+                reply_markup=add_scores_keyboard(character, scores)
+            )
+        
+
+

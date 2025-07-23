@@ -27,13 +27,18 @@ def add_scores_keyboard(character: Character, new_scores: NewScores) -> types.In
     builder.button(text="+", callback_data=AddScoresCallback(action="inc", feature="agility")) 
 
     builder.button(text="-", callback_data=AddScoresCallback(action="dec", feature="physique"))
-    builder.button(text=f"Телосложение {character.phisyque + new_scores.physique}", callback_data=AddScoresCallback(action="none"))
+    builder.button(text=f"Здоровье {character.physique + new_scores.physique}", callback_data=AddScoresCallback(action="none"))
     builder.button(text="+", callback_data=AddScoresCallback(action="inc", feature="physique"))
 
     builder.button(
-        text=f"{character.available_scores} очков" if character.available_scores > 0 else "Подтвердить",
-        callback_data=AddScoresCallback(action="none" if character.available_scores > 0 else "done")
+        text=f"{character.available_scores} очков",
+        callback_data=AddScoresCallback(action="none")
     )
 
-    builder.adjust(3, 3, 3, 1)
+    builder.button(
+        text="Подтвердить",
+        callback_data=AddScoresCallback(action="done")
+    )
+
+    builder.adjust(3, 3, 3, 1, 1)
     return builder.as_markup()

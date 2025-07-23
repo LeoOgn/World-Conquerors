@@ -8,7 +8,7 @@ class Mob(BaseModel):
     name: str
     streight: int
     agility: int
-    phisyque: int
+    physique: int
     level: int
     location_id: int
     exp: int
