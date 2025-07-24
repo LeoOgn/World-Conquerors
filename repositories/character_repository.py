@@ -39,7 +39,7 @@ class CharacterRepository:
         self.connection.commit()
 
     def level_up(self, user_id: int):
-        sql = "UPDATE characters SET level = ?, experience = ?, available_scores = ? WHERE character_id = ?"
+        sql = "UPDATE characters SET level = ?, experience = ?, available_scores = ? WHERE id = ?"
         character = self.get_by_user_id(user_id)
         experience = character.experience - 2 ** character.level
         level = character.level + 1
@@ -60,7 +60,7 @@ class CharacterRepository:
         cursor.execute(sql, (
             character.streight, 
             character.agility, 
-            character.phisyque, 
+            character.physique, 
             character.available_scores,
             character.id
         ))

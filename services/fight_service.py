@@ -1,5 +1,6 @@
 from repositories import MobRepository, Mob, CharacterRepository, Character
 from pydantic import BaseModel
+from random import randint
 
 class FightInfo(BaseModel):
     status: str = "in_process"
@@ -34,12 +35,21 @@ class FightService:
         mob_dmg = fight.character.streight*5 - fight.mob.physique
         if mob_dmg < 0: mob_dmg = 0
         print("mob_dmg", mob_dmg)
-        fight.mob_health -= mob_dmg
+        mob_evasion = fight.mob.agility - fight.character.agility
+        if mob_evasion < 0: mob_evasion = 0
+        chance = randint(1, 100)
+        if chance > mob_evasion:
+            fight.mob_health -= mob_dmg
 
         character_dmg = fight.mob.streight*5 - fight.character.physique
         if character_dmg < 0: character_dmg = 0
         print("character_dmg", character_dmg)
-        fight.character.current_health -= character_dmg
+
+        character_evasion = fight.character.agility - fight.mob.agility
+        if character_evasion < 0: character_evasion = 0
+        chance = randint(1, 100)
+        if chance > character_evasion:
+            fight.character.current_health -= character_dmg
 
         self.character_repository.update_character_health(fight.character.current_health, fight.character.current_health)
 
