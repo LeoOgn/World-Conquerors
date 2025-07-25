@@ -83,7 +83,8 @@ create_equipment = """
         equipment_type_id INTEGER NOT NULL,
         equiment_set_id INTEGER DEFAULT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (equipment_type_id) REFERENCES equipment_types (id)
+        FOREIGN KEY (equipment_type_id) REFERENCES equipment_types (id),
+        FOREIGN KEY (equipment_set_id) REFERENCES equipment_sets (id)
     );
 """
 create_inventory = """
