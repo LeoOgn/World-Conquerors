@@ -50,6 +50,21 @@ create_mobs = """
         FOREIGN KEY (location_id) REFERENCES locations (id)
     );
 """
+create_equipment_types = """
+    CREATE TABLE IF NOT EXISTS equipment_types (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title VARCHAR(255)
+    );
+"""
+create_equipment_sets = """
+    CREATE TABLE IF NOT EXISTS equipment_sets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title VARCHAR(255),
+        bonus_streight INTEGER DEFAULT 0,
+        bonus_agility INTEGER DEFAULT 0,
+        bonus_physique INTEGER DEFAULT 0
+    );
+"""
 create_equipment = """
     CREATE TABLE IF NOT EXISTS equipment (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -65,7 +80,19 @@ create_equipment = """
         defend INTEGER DEFAULT 0,
         price INTEGER DEFAULT 0,
         rare VARCHAR(255),
-        created DATETIME DEFAULT CURRENT_TIMESTAMP
+        equipment_type_id INTEGER NOT NULL,
+        equiment_set_id INTEGER DEFAULT NULL,
+        created DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (equipment_type_id) REFERENCES equipment_types (id)
+    );
+"""
+create_inventory = """
+    CREATE TABLE IF NOT EXISTS inventory (
+        character_id INTEGER,
+        equipment_id INTEGER,
+        count INTEGER DEFAULT 1,
+        is_equiped BOOLEAN DEFAULT FALSE,
+        PRIMARY KEY (character_id, equipment_id)
     );
 """
 cursor = connection.cursor()
@@ -73,7 +100,10 @@ cursor.execute(create_users)
 cursor.execute(create_characters)
 cursor.execute(create_locations)
 cursor.execute(create_mobs)
+cursor.execute(create_equipment_types)
+cursor.execute(create_equipment_sets)
 cursor.execute(create_equipment)
+cursor.execute(create_inventory)
 connection.commit()
 
 seed_locations()
