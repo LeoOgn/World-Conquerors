@@ -1,6 +1,7 @@
 from sqlite3 import connect
 from seeds.location_seed import seed_locations
 from seeds.mob_seed import seed_mobs
+from seeds.equipment_seed import seed_equipment_sets, seed_equipment_types, seed_equipments
 
 
 connection = connect("db.db")
@@ -81,7 +82,7 @@ create_equipment = """
         price INTEGER DEFAULT 0,
         rare VARCHAR(255),
         equipment_type_id INTEGER NOT NULL,
-        equiment_set_id INTEGER DEFAULT NULL,
+        equipment_set_id INTEGER DEFAULT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (equipment_type_id) REFERENCES equipment_types (id),
         FOREIGN KEY (equipment_set_id) REFERENCES equipment_sets (id)
@@ -107,5 +108,8 @@ cursor.execute(create_equipment)
 cursor.execute(create_inventory)
 connection.commit()
 
-seed_locations()
-seed_mobs()
+# seed_locations()
+# seed_mobs()
+# seed_equipment_types()
+# seed_equipment_sets()
+seed_equipments()
