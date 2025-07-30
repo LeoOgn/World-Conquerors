@@ -2,6 +2,7 @@ from sqlite3 import connect
 from seeds.location_seed import seed_locations
 from seeds.mob_seed import seed_mobs
 from seeds.equipment_seed import seed_equipment_sets, seed_equipment_types, seed_equipments
+from seeds.item_seed import seed_items
 
 
 connection = connect("db.db")
@@ -88,13 +89,23 @@ create_equipment = """
         FOREIGN KEY (equipment_set_id) REFERENCES equipment_sets (id)
     );
 """
+create_items = """
+    CREATE TABLE IF NOT EXISTS items (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title VARCHAR(255),
+        equipment_id INTEGER,
+        FOREIGN KEY (equipment_id) REFERENCES equipment (id)
+    );
+"""
 create_inventory = """
     CREATE TABLE IF NOT EXISTS inventory (
         character_id INTEGER,
-        equipment_id INTEGER,
+        item_id INTEGER,
         count INTEGER DEFAULT 1,
         is_equiped BOOLEAN DEFAULT FALSE,
-        PRIMARY KEY (character_id, equipment_id)
+        PRIMARY KEY (character_id, item_id),
+        FOREIGN KEY (character_id) REFERENCES characters (id),
+        FOREIGN KEY (item_id) REFERENCES items (id)
     );
 """
 cursor = connection.cursor()
@@ -105,11 +116,13 @@ cursor.execute(create_mobs)
 cursor.execute(create_equipment_types)
 cursor.execute(create_equipment_sets)
 cursor.execute(create_equipment)
+cursor.execute(create_items)
 cursor.execute(create_inventory)
 connection.commit()
 
-# seed_locations()
-# seed_mobs()
-# seed_equipment_types()
-# seed_equipment_sets()
+seed_locations()
+seed_mobs()
+seed_equipment_types()
+seed_equipment_sets()
 seed_equipments()
+seed_items()

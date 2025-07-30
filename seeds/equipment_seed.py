@@ -63,4 +63,4 @@ def seed_equipments(equipments=EQUIPMENTS, start=0, end=len(EQUIPMENTS)):
 
     for equipment in equipments[start:end]:
         repo.create(**equipment)
-        print(f"Предмет {equipment["title"]} создан")
+        print(f"Часть экипировки {equipment["title"]} создана")

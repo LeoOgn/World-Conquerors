@@ -44,6 +44,16 @@ MOBS = [
     {"name": "Бриллиантовый жук", "streight" : 10, "agility" : 0, "physique" : 85, "level" : 19, "location_id" : 4, "exp" : 7000},
     {"name": "Королева жуков", "streight" : 15, "agility" : 60, "physique" : 10, "level" : 20, "location_id" : 4, "exp" : 10000},
     {"name": "Рогдар", "streight" : 4, "agility" : 120, "physique" : 1, "level" : 25, "location_id" : 4, "exp" : 180000},
+    {"name": "Кривозуб", "streight" : 5, "agility" : 50, "physique" : 50, "level" : 21, "location_id" : 5, "exp" : 15000},
+    {"name": "Адамантитовый аист", "streight" : 70, "agility" : 0, "physique" : 35, "level" : 21, "location_id" : 5, "exp" : 15000},
+    {"name": "Жаба", "streight" : 30, "agility" : 0, "physique" : 80, "level" : 22, "location_id" : 5, "exp" : 20000},
+    {"name": "Комар", "streight" : 1, "agility" : 108, "physique" : 1, "level" : 22, "location_id" : 5, "exp" : 20000},
+    {"name": "Летун", "streight" : 20, "agility" : 80, "physique" : 5, "level" : 23, "location_id" : 5, "exp" : 30000},
+    {"name": "Пиявка", "streight" : 4, "agility" : 120, "physique" : 1, "level" : 23, "location_id" : 5, "exp" : 30000},
+    {"name": "Русалка", "streight" : 4, "agility" : 120, "physique" : 1, "level" : 24, "location_id" : 5, "exp" : 45000},
+    {"name": "Болотник", "streight" : 4, "agility" : 120, "physique" : 1, "level" : 24, "location_id" : 5, "exp" : 45000},
+    {"name": "Кикимора", "streight" : 4, "agility" : 120, "physique" : 1, "level" : 25, "location_id" : 5, "exp" : 70000},
+    {"name": "Торфу - болотный бог", "streight" : 1, "agility" : 498, "physique" : 1, "level" : 100, "location_id" : 5, "exp" : 2000000},
 
     # Мобы для подземелья "Адское пекло" - 50 уровень
     {"name": "Сатир", "streight" : 15, "agility" : 60, "physique" : 10, "level" : 50, "location_id" : 4, "exp" : 3000},
