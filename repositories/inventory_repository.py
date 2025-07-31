@@ -21,14 +21,21 @@ class InventoryRepository:
         self.connection.commit()
 
     def get_items_by_character_id(self, character_id: int) -> List[Inventory]:
-        sql = "SELECT * FROM inventory WHERE character_id = ?"
+        sql = """
+            SELECT items.title, inventory.count FROM inventory 
+            LEFT JOIN items ON inventory.item_id = items.id
+            LEFT JOIN equipment ON items.equipment_id = equipment.id
+            WHERE inventory.character_id = ?
+        """
+
         cursor = self.connection.cursor()
         cursor.execute(sql, (character_id,))
         inventory = cursor.fetchall()
-        return [
-            Inventory(**{key : inv[i] for i, key in enumerate(Inventory.model_fields.keys())})
-            for inv in inventory
-        ]
+        print(inventory)
+        # return [
+        #     Inventory(**{key : inv[i] for i, key in enumerate(Inventory.model_fields.keys())})
+        #     for inv in inventory
+        # ]
     
     def update_item_count(self, character_id: int, item_id: int, count: int):
         sql = "UPDATE inventory SET count = ? WHERE character_id = ? AND item_id = ?"
