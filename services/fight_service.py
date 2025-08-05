@@ -21,7 +21,7 @@ class FightService:
         self.fights[player_id] = FightInfo(
             mob = mob,
             character=character,
-            mob_health=mob.physique*5
+            mob_health=mob.physique*3
         )
 
     def get_fight(self, player_id: int) -> FightInfo:
@@ -32,7 +32,7 @@ class FightService:
         return character.experience >= must_exp
     def on_hit(self, player_id: int) -> FightInfo:
         fight = self.get_fight(player_id)
-        mob_dmg = fight.character.streight*5 - fight.mob.physique
+        mob_dmg = fight.character.streight
         if mob_dmg < 0: mob_dmg = 0
         print("mob_dmg", mob_dmg)
         mob_evasion = fight.mob.agility - fight.character.agility
@@ -41,7 +41,7 @@ class FightService:
         if chance > mob_evasion:
             fight.mob_health -= mob_dmg
 
-        character_dmg = fight.mob.streight*5 - fight.character.physique
+        character_dmg = fight.mob.streight
         if character_dmg < 0: character_dmg = 0
         print("character_dmg", character_dmg)
 

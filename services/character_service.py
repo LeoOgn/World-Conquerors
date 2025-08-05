@@ -17,7 +17,7 @@ class CharacterService:
         character.streight += scores.streight
         character.agility += scores.agility
         character.physique += scores.physique
-        character.current_health = character.physique * 5
+        character.current_health = character.physique * 3
 
         self.character_repo.update_character_scores(character)
         self.character_repo.update_character_health(character.current_health, character.id)
