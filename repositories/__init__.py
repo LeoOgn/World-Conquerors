@@ -5,6 +5,7 @@ from .mob_repository import MobRepository, Mob
 from .equipment_repository import EquipmentRepository
 from .item_repository import ItemRepository
 from .inventory_repository import InventoryRepository
+from .loot_repository import LootRepository, Loot
 
 
 __all__ = [
@@ -17,5 +18,7 @@ __all__ = [
     "Character",
     "EquipmentRepository",
     "ItemRepository",
-    "InventoryRepository"
+    "InventoryRepository",
+    "LootRepository",
+    "Loot"
 ]

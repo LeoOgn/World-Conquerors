@@ -108,6 +108,17 @@ create_inventory = """
         FOREIGN KEY (item_id) REFERENCES items (id)
     );
 """
+create_loot = """
+    CREATE TABLE IF NOT EXISTS loot (
+        mob_id INTEGER,
+        item_id INTEGER,
+        chance FLOAT,
+        PRIMARY KEY (mob_id, item_id),
+        FOREIGN KEY (mob_id) REFERENCES mobs (id),
+        FOREIGN KEY (item_id) REFERENCES items (id)
+    );
+"""
+
 cursor = connection.cursor()
 cursor.execute(create_users)
 cursor.execute(create_characters)
@@ -118,11 +129,12 @@ cursor.execute(create_equipment_sets)
 cursor.execute(create_equipment)
 cursor.execute(create_items)
 cursor.execute(create_inventory)
+cursor.execute(create_loot)
 connection.commit()
 
-seed_locations()
-seed_mobs()
-seed_equipment_types()
-seed_equipment_sets()
-seed_equipments()
-seed_items()
+# seed_locations()
+# seed_mobs()
+# seed_equipment_types()
+# seed_equipment_sets()
+# seed_equipments()
+# seed_items()
