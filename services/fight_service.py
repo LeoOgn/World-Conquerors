@@ -1,12 +1,14 @@
 from repositories import MobRepository, Mob, CharacterRepository, Character
 from pydantic import BaseModel
 from random import randint, random
+from typing import List
 
 class FightInfo(BaseModel):
     status: str = "in_process"
     mob: Mob
     character: Character
     mob_health: int
+    loot: List[int] | None = None
 
 
 class FightService:
@@ -41,10 +43,18 @@ class FightService:
         must_exp = 2 ** character.level
         return character.experience >= must_exp
     
-    def _get_loot(self, mob: Mob, character: Character):
+    def _get_loot(self, mob: Mob, character: Character) -> List[int]:
         loot = []
         if mob.level >= character.level:
             k = random()
+            prob_sum = 0
+            for item_id, chance in self.KEYS_CHANCE.items():
+                prob_sum += chance
+                if k <= prob_sum:
+                    loot.append(item_id)
+                    break
+        return loot
+                
             
     
     def on_hit(self, player_id: int) -> FightInfo:
@@ -87,6 +97,7 @@ class FightService:
             if self._can_level_up(fight.character):
                 self.character_repository.level_up(player_id)
             fight.status = "win"
+            fight.loot = self._get_loot(fight.mob, fight.character)
             fight.character = self.character_repository.get_by_user_id(player_id)
             return fight
         
