@@ -1,4 +1,6 @@
 from repositories import InventoryRepository
+from typing import List
+from repositories import UserInventory
 
 
 class InventoryService:
@@ -11,4 +13,7 @@ class InventoryService:
             self.inventory_repo.add_item(character_id, item_id)
         else:
             self.inventory_repo.update_item_count(character_id, item_id, inv.count + 1)
+
+    def get_inventory(self, character_id: int) -> List[UserInventory]:
+        return self.inventory_repo.get_items_by_character_id(character_id)
         

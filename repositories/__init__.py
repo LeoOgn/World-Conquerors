@@ -4,7 +4,7 @@ from .location_repository import LocationRepository, Location
 from .mob_repository import MobRepository, Mob
 from .equipment_repository import EquipmentRepository
 from .item_repository import ItemRepository
-from .inventory_repository import InventoryRepository
+from .inventory_repository import InventoryRepository, UserInventory
 from .loot_repository import LootRepository, Loot
 
 
@@ -19,6 +19,7 @@ __all__ = [
     "EquipmentRepository",
     "ItemRepository",
     "InventoryRepository",
+    "UserInventory",
     "LootRepository",
     "Loot"
 ]
