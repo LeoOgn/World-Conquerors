@@ -1,13 +1,19 @@
-from services import CharacterService
+from services import CharacterService, InventoryService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
 from keyboards import (character_keyboard, add_scores_keyboard, NewScores, CharacterCallback, AddScoresCallback)
 from repositories import Character
+from keyboards import inventory_keyboard
 
 
 class CharacterHandler:
-    def __init__(self, character_service: CharacterService):
+    def __init__(
+        self, 
+        character_service: CharacterService,
+        inventory_service: InventoryService
+    ):
         self.character_service = character_service
+        self.inventory_service = inventory_service
 
     async def character_handler(self, msg: types.Message):
         character = self.character_service.get_by_user_id(msg.from_user.id)
@@ -23,6 +29,13 @@ class CharacterHandler:
             await callback.message.edit_text(
                 text="Распределите характеристики", 
                 reply_markup=add_scores_keyboard(character, scores)
+            )
+        elif callback_data.action == "inventory":
+            character = self.character_service.get_by_user_id(callback.from_user.id)
+            inventory = self.inventory_service.get_inventory(character.id)
+            await callback.message.edit_text(
+                text="Инвентарь",
+                reply_markup=inventory_keyboard(inventory)
             )
     
     async def score_up_handler(self, callback: types.CallbackQuery, callback_data: AddScoresCallback, state: FSMContext):

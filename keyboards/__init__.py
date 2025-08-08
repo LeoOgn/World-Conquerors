@@ -4,7 +4,7 @@ from .prefight_keyboard import prefight_keyboard, PrefightCallback
 from .fight_keyboard import fight_keyboard, FightCallback
 from .character_keyboard import character_keyboard, CharacterCallback
 from .add_scores_keyboard import add_scores_keyboard, AddScoresCallback, NewScores
-
+from .inventory_keyboard import inventory_keyboard, InventoryCallback
 
 
 
@@ -20,5 +20,7 @@ __all__ = [
     "CharacterCallback",
     "add_scores_keyboard",
     "AddScoresCallback",
-    "NewScores"
+    "NewScores",
+    "inventory_keyboard",
+    "InventoryCallback"
 ]

@@ -12,7 +12,7 @@ def character_keyboard(available_scores: int) -> types.InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     if available_scores > 0:
         builder.button(text=f"Повысить характеристики ({available_scores})", callback_data=CharacterCallback(action="score_up"))
-    builder.button(text="Инвентарь", callback_data=CharacterCallback(action="inventary"))
+    builder.button(text="Инвентарь", callback_data=CharacterCallback(action="inventory"))
     builder.button(text="Экипировка", callback_data=CharacterCallback(action="equipment"))
     builder.adjust(3 if available_scores > 0 else 2)
     return builder.as_markup()
