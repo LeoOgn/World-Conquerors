@@ -81,7 +81,6 @@ create_equipment = """
         attack INTEGER DEFAULT 0,
         defend INTEGER DEFAULT 0,
         price INTEGER DEFAULT 0,
-        rare VARCHAR(255),
         equipment_type_id INTEGER NOT NULL,
         equipment_set_id INTEGER DEFAULT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -93,6 +92,8 @@ create_items = """
     CREATE TABLE IF NOT EXISTS items (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title VARCHAR(255),
+        rare VARCHAR(255),
+        description TEXT,
         equipment_id INTEGER,
         FOREIGN KEY (equipment_id) REFERENCES equipment (id)
     );
