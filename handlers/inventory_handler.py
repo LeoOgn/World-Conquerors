@@ -1,11 +1,16 @@
 from aiogram import types
-from services import InventoryService
+from services import InventoryService, CharacterService
 from keyboards import InventoryCallback, character_keyboard
 
 
 class InventoryHandler:
-    def __init__(self, inventory_service: InventoryService):
+    def __init__(
+        self, 
+        inventory_service: InventoryService,
+        character_service: CharacterService
+    ):
         self.inventory_service = inventory_service
+        self.character_service = character_service
         
     async def inventory_handler(self, callback: types.CallbackQuery, callback_data: InventoryCallback):
         if callback_data.action == "back":
