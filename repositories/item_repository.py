@@ -10,15 +10,19 @@ class Item(BaseModel):
     description: str
     price: int
     equipment_id: int | None = None
+    image: str | None = None
     
 class ItemRepository:
     def __init__(self, connection: Connection):
         self.connection = connection
 
-    def create(self, title: str, rare: str, description: str, price: int, equipment_id: int | None = None):
-        sql = "INSERT INTO items (title, rare, description, price, equipment_id) VALUES (?, ?, ?, ?, ?)"
+    def create(self, 
+               title: str, rare: str, description: str, 
+               price: int, equipment_id: int | None = None, image: str | None = None
+            ):
+        sql = "INSERT INTO items (title, rare, description, price, equipment_id, image) VALUES (?, ?, ?, ?, ?, ?)"
         cursor = self.connection.cursor()
-        cursor.execute(sql, (title, rare, description, price, equipment_id))
+        cursor.execute(sql, (title, rare, description, price, equipment_id, image))
         self.connection.commit()
         
     def get_by_id(self, item_id: int):

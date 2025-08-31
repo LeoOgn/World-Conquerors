@@ -95,6 +95,7 @@ create_items = """
         description TEXT,
         price INTEGER DEFAULT 0,
         equipment_id INTEGER,
+        image VARCHAR(255),
         FOREIGN KEY (equipment_id) REFERENCES equipment (id)
     );
 """

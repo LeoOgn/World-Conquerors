@@ -3,12 +3,12 @@ from repositories import ItemRepository
 
 
 ITEMS = [
-    {"title": "Ключ от обычного сундука", "rare" : "Обычное", "price": 1, "description" : ""},
-    {"title": "Ключ от необычного сундука", "rare" : "Необычное", "price": 10, "description" : ""},
-    {"title": "Ключ от редкого сундука", "rare" : "Редкое", "price": 100, "description" : ""},
-    {"title": "Ключ от эпического сундука", "rare" : "Эпическое", "price": 1000, "description" : ""},
-    {"title": "Ключ от легендарного сундука", "rare" : "Легендарное", "price": 10000, "description" : ""},
-    {"title": "Ключ от реликтового сундука", "rare" : "Реликтовое", "price": 100000, "description" : ""}
+    {"title": "Ключ от обычного сундука", "rare" : "Обычное", "price": 1, "description" : "", "image" : "images/Ключ от необычного сундука.png"},
+    {"title": "Ключ от необычного сундука", "rare" : "Необычное", "price": 10, "description" : "", "image" : "images/Ключ от обычного сундука.png"},
+    {"title": "Ключ от редкого сундука", "rare" : "Редкое", "price": 100, "description" : "", "image" : "images/Ключ от редкого сундука.png"},
+    {"title": "Ключ от эпического сундука", "rare" : "Эпическое", "price": 1000, "description" : "", "image" : ""},
+    {"title": "Ключ от легендарного сундука", "rare" : "Легендарное", "price": 10000, "description" : "", "image" : ""},
+    {"title": "Ключ от реликтового сундука", "rare" : "Реликтовое", "price": 100000, "description" : "", "image" : ""}
 
 ]
 
