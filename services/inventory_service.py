@@ -1,6 +1,6 @@
 from repositories import InventoryRepository
 from typing import List
-from repositories import UserInventory, Item, Equipment, ItemRepository
+from repositories import UserInventory, Item, Equipment, ItemRepository, EquipmentRepository
 
 
 class ItemInfo(Item):
@@ -11,10 +11,12 @@ class InventoryService:
     def __init__(
         self, 
         inventory_repo: InventoryRepository,
-        item_repo: ItemRepository
+        item_repo: ItemRepository,
+        equipment_repo: EquipmentRepository
     ):
         self.inventory_repo = inventory_repo
         self.item_repo = item_repo
+        self.equipment_repo = equipment_repo
 
     def add_item(self, character_id: int, item_id: int):
         inv = self.inventory_repo.get_inventory_by_item_id(character_id, item_id)
@@ -28,5 +30,8 @@ class InventoryService:
         
     def get_item(self, item_id: int) -> ItemInfo:
         item = self.item_repo.get_by_id(item_id)
+        item_info = ItemInfo(**item.model_dump())
         if item.equipment_id is not None:
-            ...
+            equipment = self.equipment_repo.get_by_id(item.equipment_id)
+            item_info.equipment = equipment
+        return item_info

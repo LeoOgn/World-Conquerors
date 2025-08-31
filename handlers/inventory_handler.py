@@ -19,4 +19,8 @@ class InventoryHandler:
                 text=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores)
             )
         elif callback_data.action == "show":
-            ...
+            item_info = self.inventory_service.get_item(callback_data.item_id)
+            print(item_info)
+            await callback.message.edit_text(
+                text=f"{item_info.title}\nЦена: {item_info.price}"
+            )

@@ -38,3 +38,10 @@ class EquipmentRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (title,))
         self.connection.commit()
+
+    def get_by_id(self, id: int) -> Equipment:
+        sql = "SELECT * FROM equipment WHERE id = ?"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (id,))
+        equipment = cursor.fetchone()
+        return Equipment(**{key : equipment[i] for i, key in enumerate(Equipment.model_fields.keys())})
