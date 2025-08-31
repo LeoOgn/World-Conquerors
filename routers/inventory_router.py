@@ -1,6 +1,6 @@
 from handlers import InventoryHandler
 from aiogram import Dispatcher, F
-from keyboards import InventoryCallback
+from keyboards import InventoryCallback, ItemCallback
 
 
 
@@ -12,3 +12,4 @@ class InventoryRouter:
 
     def _setup_routes(self):
         self.dp.callback_query.register(self.inventory_handler.inventory_handler, InventoryCallback.filter())
+        self.dp.callback_query.register(self.inventory_handler.item_handler, ItemCallback.filter())

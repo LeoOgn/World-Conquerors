@@ -1,6 +1,6 @@
 from aiogram import types
 from services import InventoryService, CharacterService
-from keyboards import InventoryCallback, character_keyboard
+from keyboards import InventoryCallback, character_keyboard, item_keyboard, ItemCallback, inventory_keyboard
 
 
 class InventoryHandler:
@@ -22,5 +22,15 @@ class InventoryHandler:
             item_info = self.inventory_service.get_item(callback_data.item_id)
             print(item_info)
             await callback.message.edit_text(
-                text=f"{item_info.title}\nЦена: {item_info.price}"
+                text=f"{item_info.title}\nЦена: {item_info.price}",
+                reply_markup=item_keyboard()
+            )
+    
+    async def item_handler(self, callback: types.CallbackQuery, callback_data: ItemCallback):
+        if callback_data.action == "back":
+            character = self.character_service.get_by_user_id(callback.from_user.id)
+            inventory = self.inventory_service.get_inventory(character.id)
+            await callback.message.edit_text(
+                text="Инвентарь",
+                reply_markup=inventory_keyboard(inventory)
             )
