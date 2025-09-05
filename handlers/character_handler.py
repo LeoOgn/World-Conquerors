@@ -17,7 +17,7 @@ class CharacterHandler:
 
     async def character_handler(self, msg: types.Message):
         character = self.character_service.get_by_user_id(msg.from_user.id)
-        await msg.answer_photo(photo="images/Меню действий персонажа.jpg", caption=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores))
+        await msg.answer_photo(photo="../images/Character_menu.jpg", caption=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores))
 
     async def character_menu_handler(
             self, callback: types.CallbackQuery, callback_data: CharacterCallback, state: FSMContext
