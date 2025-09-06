@@ -16,13 +16,16 @@ class InventoryHandler:
         if callback_data.action == "back":
             character = self.character_service.get_by_user_id(callback.from_user.id)
             await callback.message.edit_caption(
-                text=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores)
+                caption=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", reply_markup=character_keyboard(character.available_scores)
             )
         elif callback_data.action == "show":
             item_info = self.inventory_service.get_item(callback_data.item_id)
             print(item_info)
-            await callback.message.edit_caption(
-                text=f"{item_info.title}\nЦена: {item_info.price}",
+            photo=item_info.image if item_info.image is not None else "images/Пусто.png"
+            await callback.message.edit_media(
+                media=types.InputMediaPhoto(
+                    media=types.FSInputFile(photo), caption=f"{item_info.title}\nЦена: {item_info.price}\n{item_info.description}",
+                ),
                 reply_markup=item_keyboard()
             )
     
@@ -31,6 +34,6 @@ class InventoryHandler:
             character = self.character_service.get_by_user_id(callback.from_user.id)
             inventory = self.inventory_service.get_inventory(character.id)
             await callback.message.edit_caption(
-                text="Инвентарь",
+                caption="Инвентарь",
                 reply_markup=inventory_keyboard(inventory)
             )
