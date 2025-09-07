@@ -1,4 +1,6 @@
-from sqlite3 import Connection, connect
+# from sqlite3 import Connection, connect
+from pymysql import Connection
+from pymysql.cursors import DictCursor
 from pydantic import BaseModel
 
 class Equipment(BaseModel):
@@ -44,4 +46,4 @@ class EquipmentRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (id,))
         equipment = cursor.fetchone()
-        return Equipment(**{key : equipment[i] for i, key in enumerate(Equipment.model_fields.keys())})
+        return Equipment(**equipment.items())

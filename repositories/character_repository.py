@@ -1,4 +1,6 @@
-from sqlite3 import Connection, connect
+# from sqlite3 import Connection, connect
+from pymysql import Connection
+from pymysql.cursors import DictCursor
 from pydantic import BaseModel
 
 class Character(BaseModel):
@@ -19,7 +21,7 @@ class CharacterRepository:
 
     def create(self, name: str, user_id: int):
         sql = "INSERT INTO characters (name, user_id) VALUES (?, ?)"
-        cursor = self.connection.cursor()
+        cursor: DictCursor = self.connection.cursor()
         cursor.execute(sql, (name, user_id))
         self.connection.commit()
 
@@ -28,7 +30,7 @@ class CharacterRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (user_id,))
         character = cursor.fetchone()
-        return Character(**{key : character[i] for i, key in enumerate(Character.model_fields.keys())})
+        return Character(**character.items())
 
     def update_character_health(self, new_value: int, character_id: int):
         sql = "UPDATE characters SET current_health = ? WHERE id = ?"

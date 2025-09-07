@@ -1,5 +1,7 @@
-from sqlite3 import Connection, connect
+# from sqlite3 import Connection, connect
 from typing import List
+from pymysql import Connection
+from pymysql.cursors import DictCursor
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -34,11 +36,6 @@ class LocationRepository:
         cursor.execute(sql)
         locations = cursor.fetchall()
         return [
-            Location(**{key : location[i] for i, key in enumerate(Location.model_fields.keys())})
+            Location(**location.items())
             for location in locations
         ]
-    
-if __name__ == "__main__":
-    con = connect("db.db")
-    repo = LocationRepository(con)
-    print(repo.get_all())

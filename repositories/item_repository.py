@@ -1,6 +1,7 @@
-from sqlite3 import Connection, connect
+# from sqlite3 import Connection, connect
 from pydantic import BaseModel
-from repositories import Equipment
+from pymysql import Connection
+from pymysql.cursors import DictCursor
 
 
 class Item(BaseModel):
@@ -30,4 +31,4 @@ class ItemRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (item_id,))
         item = cursor.fetchone()
-        return Item(**{key : item[i] for i, key in enumerate(Item.model_fields.keys())})
+        return Item(**item.items())

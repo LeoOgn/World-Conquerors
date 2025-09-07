@@ -1,5 +1,7 @@
-from sqlite3 import Connection, connect
+# from sqlite3 import Connection, connect
 from typing import List
+from pymysql import Connection
+from pymysql.cursors import DictCursor
 from pydantic import BaseModel
 
 class Inventory(BaseModel):
@@ -38,7 +40,7 @@ class InventoryRepository:
         inventory = cursor.fetchall()
         print(inventory)
         return [
-            UserInventory(**{key : inv[i] for i, key in enumerate(UserInventory.model_fields.keys())})
+            UserInventory(**inv.item())
             for inv in inventory
         ]
     
@@ -54,4 +56,4 @@ class InventoryRepository:
         cursor.execute(sql, (character_id, item_id,))
         inventory = cursor.fetchone()
         if not inventory: return None
-        return Inventory(**{key : inventory[i] for i, key in enumerate(Inventory.model_fields.keys())})
+        return Inventory(**inventory.items())

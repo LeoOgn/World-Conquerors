@@ -1,11 +1,12 @@
-from sqlite3 import connect
+# from sqlite3 import connect
+from repositories import connection
 from seeds.location_seed import seed_locations
 from seeds.mob_seed import seed_mobs
 from seeds.equipment_seed import seed_equipment_sets, seed_equipment_types, seed_equipments
 from seeds.item_seed import seed_items
 
 
-connection = connect("db.db")
+# connection = connect("db.db")
 create_users = """
     CREATE TABLE IF NOT EXISTS users (
         id BIGINT PRIMARY KEY,
@@ -15,7 +16,7 @@ create_users = """
 """
 create_characters = """
     CREATE TABLE IF NOT EXISTS characters (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255),
         streight INTEGER DEFAULT 0,
         agility INTEGER DEFAULT 0,

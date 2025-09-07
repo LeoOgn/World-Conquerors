@@ -1,3 +1,4 @@
+from .connection import connection
 from .user_repository import UserRepository
 from .character_repository import CharacterRepository, Character
 from .location_repository import LocationRepository, Location
@@ -23,5 +24,6 @@ __all__ = [
     "InventoryRepository",
     "UserInventory",
     "LootRepository",
-    "Loot"
+    "Loot",
+    "connection"
 ]

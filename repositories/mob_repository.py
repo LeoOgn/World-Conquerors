@@ -1,5 +1,7 @@
-from sqlite3 import Connection, connect
+# from sqlite3 import Connection, connect
 from typing import List
+from pymysql import Connection
+from pymysql.cursors import DictCursor
 from pydantic import BaseModel
 
 
@@ -37,7 +39,7 @@ class MobRepository:
     
         mobs = cursor.fetchall()
         return [
-            Mob(**{key : mob[i] for i, key in enumerate(Mob.model_fields.keys())})
+            Mob(**mob.items())
             for mob in mobs
         ]
     
