@@ -21,13 +21,13 @@ class ItemRepository:
                title: str, rare: str, description: str, 
                price: int, equipment_id: int | None = None, image: str | None = None
             ):
-        sql = "INSERT INTO items (title, rare, description, price, equipment_id, image) VALUES (?, ?, ?, ?, ?, ?)"
+        sql = "INSERT INTO items (title, rare, description, price, equipment_id, image) VALUES (%s, %s, %s, %s, %s, %s)"
         cursor = self.connection.cursor()
         cursor.execute(sql, (title, rare, description, price, equipment_id, image))
         self.connection.commit()
         
     def get_by_id(self, item_id: int):
-        sql = "SELECT * FROM items WHERE id = ?"
+        sql = "SELECT * FROM items WHERE id = %s"
         cursor = self.connection.cursor()
         cursor.execute(sql, (item_id,))
         item = cursor.fetchone()

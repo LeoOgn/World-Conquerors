@@ -1,5 +1,5 @@
-from sqlite3 import connect
-from repositories import MobRepository
+# from sqlite3 import connect
+from repositories import MobRepository, connection
 
 
 MOBS = [
@@ -71,7 +71,6 @@ MOBS = [
 ]
 
 def seed_mobs(mobs=MOBS, start=0, end=len(MOBS)):
-    connection = connect("db.db")
     repo = MobRepository(connection)
 
     for mob in mobs[start:end]:

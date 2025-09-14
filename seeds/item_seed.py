@@ -1,5 +1,5 @@
-from sqlite3 import connect
-from repositories import ItemRepository
+# from sqlite3 import connect
+from repositories import ItemRepository, connection
 
 
 ITEMS = [
@@ -13,7 +13,6 @@ ITEMS = [
 ]
 
 def seed_items(items=ITEMS, start=0, end=len(ITEMS)):
-    connection = connect("db.db")
     repo = ItemRepository(connection)
     
     for item in items[start:end]:

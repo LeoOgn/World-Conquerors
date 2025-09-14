@@ -6,13 +6,13 @@ class UserRepository:
         self.connection = connection
         
     def check_user(self, user_id: int)  -> bool:
-        sql = "SELECT * FROM users WHERE id = ?"
+        sql = "SELECT * FROM users WHERE id = %s"
         cursor = self.connection.cursor()
         cursor.execute(sql, (user_id,))
         return cursor.fetchone() is not None
 
     def create(self, id: int, username: str):
-        sql = "INSERT INTO users (id, name) VALUES (?, ?)"
+        sql = "INSERT INTO users (id, name) VALUES (%s, %s)"
         cursor = self.connection.cursor()
         cursor.execute(sql, (id, username))
         self.connection.commit()

@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
-from sqlite3 import connect
+# from sqlite3 import connect
+from repositories import connection
 import os, asyncio
 
 from repositories import *
@@ -13,7 +14,7 @@ load_dotenv(override=True)
 bot = Bot(os.getenv("TOKEN"))
 dp = Dispatcher()
 
-connection = connect("db.db")
+# connection = connect("db.db") Старая база
 user_repository = UserRepository(connection)
 character_repository = CharacterRepository(connection)
 location_repository = LocationRepository(connection)

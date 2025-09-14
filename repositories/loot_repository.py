@@ -13,7 +13,7 @@ class LootRepository:
         self.connection = connection
         
     def create(self, loot: Loot):
-        sql = "INSERT INTO loot (mob_id, item_id, chance) VALUES (?, ?, ?)"
+        sql = "INSERT INTO loot (mob_id, item_id, chance) VALUES (%s, %s, %s)"
         cursor = self.connection.cursor()
         cursor.execute(sql, (loot.mob_id, loot.item_id, loot.chance))
         self.connection.commit()

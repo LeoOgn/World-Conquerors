@@ -25,7 +25,7 @@ class LocationRepository:
         self.connection.commit()
 
     def create(self, title: str, level_from: str, level_to: int):
-        sql = "INSERT INTO locations (title, level_from, level_to) VALUES (?, ?, ?)"
+        sql = "INSERT INTO locations (title, level_from, level_to) VALUES (%s, %s, %s)"
         cursor = self.connection.cursor()
         cursor.execute(sql, (title, level_from, level_to))
         self.connection.commit()

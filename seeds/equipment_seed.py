@@ -1,5 +1,4 @@
-from sqlite3 import connect
-from repositories import EquipmentRepository, ItemRepository
+from repositories import EquipmentRepository, ItemRepository, connection
 
 
 EQUIPMENT_TYPES = [
@@ -40,7 +39,7 @@ EQUIPMENTS = [
     {"title" : "Хитиновые штаны Теодора", "bonus_streight" : 10, "bonus_agility" : 5, "bonus_physique" : 0, "must_level" : 30, "must_streight" : 40, "must_agility" : 0, "must_physique" : 40, "attack" : 0, "defend" : 100, "price" : 10000, "rare" : "Реликтовое", "equipment_type_id" : 3, "equipment_set_id" : 1, "description" : ""},
     {"title" : "Мифриловая куртка Теодора", "bonus_streight" : 5, "bonus_agility" : 25, "bonus_physique" : 30, "must_level" : 30, "must_streight" : 40, "must_agility" : 0, "must_physique" : 40, "attack" : 0, "defend" : 100, "price" : 10000, "rare" : "Реликтовое", "equipment_type_id" : 2, "equipment_set_id" : 1, "description" : ""},
     {"title" : "Адамантитовый шлем Теодора", "bonus_streight" : 0, "bonus_agility" : 40, "bonus_physique" : 0, "must_level" : 35, "must_streight" : 70, "must_agility" : 0, "must_physique" : 60, "attack" : 0, "defend" : 200, "price" : 12000, "rare" : "Реликтовое", "equipment_type_id" : 1, "equipment_set_id" : 1, "description" : ""},
-    {"title" : "Лавовые кинжалы Теодора", "bonus_streight" : 0, "bonus_agility" : 50, "bonus_physique" : 0, "must_level" : 40, "must_streight" : 0, "must_agility" : 100, "must_physique" : 0, "attack" : 500, "defend" : 0, "price" : 15000, "rare" : "Реликтовое", "equipment_type_id" : 7, "equipment_set_id" : 1, "description" : ""},
+    {"title" : "Лавовые кинжалы Теодора", "bonus_streight" : 0, "bonus_agility" : 50, "bonus_physique" : 0, "must_level" : 40, "must_streight" : 0, "must_agility" : 100, "must_physique" : 0, "attack" : 500, "defend" : 0, "price" : 15000, "rare" : "Реликтовое", "equipment_type_id" : 6, "equipment_set_id" : 1, "description" : ""},
     {"title" : "Корыто Святогора", "bonus_streight" : 0, "bonus_agility" : 0, "bonus_physique" : 0, "must_level" : 1, "must_streight" : 0, "must_agility" : 100, "must_physique" : 0, "attack" : 0, "defend" : 0, "price" : 15000, "rare" : "Легендарное", "equipment_type_id" : 1, "equipment_set_id" : 2, "description" : ""},
     {"title" : "Покоцаная рубаха Святогора", "bonus_streight" : 0, "bonus_agility" : 0, "bonus_physique" : 0, "must_level" : 1, "must_streight" : 0, "must_agility" : 100, "must_physique" : 0, "attack" : 0, "defend" : 0, "price" : 15000, "rare" : "Легендарное", "equipment_type_id" : 2, "equipment_set_id" : 2, "description" : ""},
     {"title" : "Неотесаные штаны Святогора", "bonus_streight" : 0, "bonus_agility" : 0, "bonus_physique" : 0, "must_level" : 1, "must_streight" : 0, "must_agility" : 100, "must_physique" : 0, "attack" : 0, "defend" : 0, "price" : 15000, "rare" : "Легендарное", "equipment_type_id" : 3, "equipment_set_id" : 2, "description" : ""},
@@ -59,7 +58,6 @@ EQUIPMENTS = [
 ]
 
 def seed_equipment_types(equipment_types=EQUIPMENT_TYPES, start=0, end=len(EQUIPMENT_TYPES)):
-    connection = connect("db.db")
     repo = EquipmentRepository(connection)
 
     for equipment_type in equipment_types[start:end]:
@@ -67,7 +65,6 @@ def seed_equipment_types(equipment_types=EQUIPMENT_TYPES, start=0, end=len(EQUIP
         print(f"Тип {equipment_type} создан")
 
 def seed_equipment_sets(equipment_sets=EQUIPMENT_SETS, start=0, end=len(EQUIPMENT_SETS)):
-    connection = connect("db.db")
     repo = EquipmentRepository(connection)
 
     for equipment_set in equipment_sets[start:end]:
@@ -75,7 +72,6 @@ def seed_equipment_sets(equipment_sets=EQUIPMENT_SETS, start=0, end=len(EQUIPMEN
         print(f"Сет {equipment_set["title"]} создан")
 
 def seed_equipments(equipments=EQUIPMENTS, start=0, end=len(EQUIPMENTS)):
-    connection = connect("db.db")
     repo = EquipmentRepository(connection)
     item_repo = ItemRepository(connection)
 

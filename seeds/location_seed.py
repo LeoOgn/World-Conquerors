@@ -1,5 +1,5 @@
-from sqlite3 import connect
-from repositories import LocationRepository
+# from sqlite3 import connect
+from repositories import LocationRepository, connection
 
 
 LOCATIONS = [
@@ -12,7 +12,6 @@ LOCATIONS = [
 ]
 
 def seed_locations(locations=LOCATIONS, start=0, end=len(LOCATIONS)):
-    connection = connect("db.db")
     repo = LocationRepository(connection)
     repo.clear()
     

@@ -21,7 +21,7 @@ class MobRepository:
         self.connection = connection
 
     def create(self, name: str, streight: int, agility: int, physique: int, level: int, location_id: int, exp: int):
-        sql = "INSERT INTO mobs (name, streight, agility, physique, level, location_id, exp) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        sql = "INSERT INTO mobs (name, streight, agility, physique, level, location_id, exp) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cursor = self.connection.cursor()
         cursor.execute(sql, (name, streight, agility, physique, level, location_id, exp))
         self.connection.commit()
@@ -33,7 +33,7 @@ class MobRepository:
         return cursor.fetchall()
     
     def get_by_location_id(self, location_id: int):
-        sql = "SELECT * FROM mobs WHERE location_id = ?"
+        sql = "SELECT * FROM mobs WHERE location_id = %s"
         cursor = self.connection.cursor()
         cursor.execute(sql, (location_id,))
     
@@ -44,7 +44,7 @@ class MobRepository:
         ]
     
     def get_by_id(self, mob_id: int) -> Mob:
-        sql = "SELECT * FROM mobs WHERE id = ?"
+        sql = "SELECT * FROM mobs WHERE id = %s"
         cursor = self.connection.cursor()
         cursor.execute(sql, (mob_id,))
         mob = cursor.fetchone()

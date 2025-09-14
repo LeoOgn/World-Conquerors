@@ -9,7 +9,7 @@ from seeds.item_seed import seed_items
 # connection = connect("db.db")
 create_users = """
     CREATE TABLE IF NOT EXISTS users (
-        id BIGINT PRIMARY KEY,
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255),
         created DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -26,14 +26,14 @@ create_characters = """
         experience INTEGER DEFAULT 0,
         current_health INTEGER DEFAULT 5,
         available_scores INTEGER DEFAULT 5,
-        user_id INTEGER NOT NULL,
+        user_id BIGINT NOT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users (id)
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
     );
 """
 create_locations = """
     CREATE TABLE IF NOT EXISTS locations (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(255),
         level_from INTEGER,
         level_to INTEGER,
@@ -42,7 +42,7 @@ create_locations = """
 """
 create_mobs = """
     CREATE TABLE IF NOT EXISTS mobs (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255),
         streight INTEGER DEFAULT 0,
         agility INTEGER DEFAULT 0,
@@ -55,13 +55,13 @@ create_mobs = """
 """
 create_equipment_types = """
     CREATE TABLE IF NOT EXISTS equipment_types (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(255)
     );
 """
 create_equipment_sets = """
     CREATE TABLE IF NOT EXISTS equipment_sets (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(255),
         bonus_streight INTEGER DEFAULT 0,
         bonus_agility INTEGER DEFAULT 0,
@@ -70,7 +70,7 @@ create_equipment_sets = """
 """
 create_equipment = """
     CREATE TABLE IF NOT EXISTS equipment (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(255),
         bonus_streight INTEGER DEFAULT 0,
         bonus_agility INTEGER DEFAULT 0,
@@ -90,7 +90,7 @@ create_equipment = """
 """
 create_items = """
     CREATE TABLE IF NOT EXISTS items (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(255),
         rare VARCHAR(255),
         description TEXT,
