@@ -46,4 +46,4 @@ class EquipmentRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (id,))
         equipment = cursor.fetchone()
-        return Equipment(**equipment.items())
+        return Equipment(**equipment)

@@ -31,4 +31,4 @@ class ItemRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (item_id,))
         item = cursor.fetchone()
-        return Item(**item.items())
+        return Item(**item)

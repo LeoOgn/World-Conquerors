@@ -39,7 +39,7 @@ class MobRepository:
     
         mobs = cursor.fetchall()
         return [
-            Mob(**mob.items())
+            Mob(**mob)
             for mob in mobs
         ]
     

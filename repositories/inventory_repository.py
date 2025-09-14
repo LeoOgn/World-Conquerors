@@ -56,4 +56,4 @@ class InventoryRepository:
         cursor.execute(sql, (character_id, item_id,))
         inventory = cursor.fetchone()
         if not inventory: return None
-        return Inventory(**inventory.items())
+        return Inventory(**inventory)

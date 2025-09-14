@@ -30,7 +30,7 @@ class CharacterRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (user_id,))
         character = cursor.fetchone()
-        return Character(**character.items())
+        return Character(**character)
 
     def update_character_health(self, new_value: int, character_id: int):
         sql = "UPDATE characters SET current_health = %s WHERE id = %s"

@@ -36,6 +36,6 @@ class LocationRepository:
         cursor.execute(sql)
         locations = cursor.fetchall()
         return [
-            Location(**location.items())
+            Location(**location)
             for location in locations
         ]
