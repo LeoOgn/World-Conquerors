@@ -48,5 +48,5 @@ class MobRepository:
         cursor = self.connection.cursor()
         cursor.execute(sql, (mob_id,))
         mob = cursor.fetchone()
-        return Mob(**{key : mob[i] for i, key in enumerate(Mob.model_fields.keys())})
+        return Mob(**mob)
     

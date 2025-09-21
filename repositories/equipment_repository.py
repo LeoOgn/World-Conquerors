@@ -8,7 +8,7 @@ class Equipment(BaseModel):
     title: str
     bonus_streight: int
     bonus_agility: int
-    bonus_phisyque: int
+    bonus_physique: int
     must_level: int
     must_streight: int
     must_agility: int

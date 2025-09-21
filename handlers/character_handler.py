@@ -18,7 +18,7 @@ class CharacterHandler:
     async def character_handler(self, msg: types.Message):
         character = self.character_service.get_by_user_id(msg.from_user.id)
         await msg.answer_photo(
-            photo=types.FSInputFile("images/Character_menu.jpg"), 
+            photo=types.FSInputFile("images/Персонаж.png"), 
             caption=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", 
             reply_markup=character_keyboard(character.available_scores)
         )
@@ -37,8 +37,10 @@ class CharacterHandler:
         elif callback_data.action == "inventory":
             character = self.character_service.get_by_user_id(callback.from_user.id)
             inventory = self.inventory_service.get_inventory(character.id)
-            await callback.message.edit_caption(
-                caption="Инвентарь",
+            await callback.message.edit_media(
+                media=types.InputMediaPhoto(
+                    media=types.FSInputFile("images/Инвентарь.png"), caption="Инвентарь",
+                ),
                 reply_markup=inventory_keyboard(inventory)
             )
     

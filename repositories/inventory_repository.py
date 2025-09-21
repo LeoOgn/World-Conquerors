@@ -28,7 +28,7 @@ class InventoryRepository:
 
     def get_items_by_character_id(self, character_id: int) -> List[UserInventory]:
         sql = """
-            SELECT items.id, items.title, inventory.count, inventory.is_equiped
+            SELECT items.id AS item_id, items.title AS item_title, inventory.count AS count, inventory.is_equiped AS is_equiped
             FROM inventory 
             LEFT JOIN items ON inventory.item_id = items.id
             LEFT JOIN equipment ON items.equipment_id = equipment.id
@@ -40,7 +40,7 @@ class InventoryRepository:
         inventory = cursor.fetchall()
         print(inventory)
         return [
-            UserInventory(**inv.item())
+            UserInventory(**inv)
             for inv in inventory
         ]
     
