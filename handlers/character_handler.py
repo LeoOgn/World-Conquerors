@@ -3,7 +3,7 @@ from aiogram import types
 from aiogram.fsm.context import FSMContext
 from keyboards import (character_keyboard, add_scores_keyboard, NewScores, CharacterCallback, AddScoresCallback)
 from repositories import Character
-from keyboards import inventory_keyboard
+from keyboards import inventory_keyboard, equipment_keyboard
 
 
 class CharacterHandler:
@@ -42,6 +42,14 @@ class CharacterHandler:
                     media=types.FSInputFile("images/Инвентарь.png"), caption="Инвентарь",
                 ),
                 reply_markup=inventory_keyboard(inventory)
+            )
+        elif callback_data.action == "equipment":
+            character = self.character_service.get_by_user_id(callback.from_user.id)
+            await callback.message.edit_media(
+                media=types.InputMediaPhoto(
+                    media=types.FSInputFile("images/Экипировка.png"), caption="Ваша экипировка",
+                ),
+                reply_markup=equipment_keyboard()
             )
     
     async def score_up_handler(self, callback: types.CallbackQuery, callback_data: AddScoresCallback, state: FSMContext):

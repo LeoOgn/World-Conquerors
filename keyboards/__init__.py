@@ -6,6 +6,7 @@ from .character_keyboard import character_keyboard, CharacterCallback
 from .add_scores_keyboard import add_scores_keyboard, AddScoresCallback, NewScores
 from .inventory_keyboard import inventory_keyboard, InventoryCallback
 from .item_keyboard import item_keyboard, ItemCallback
+from .equipment_keyboard import equipment_keyboard, EquipmentCallback
 
 
 
@@ -26,4 +27,6 @@ __all__ = [
     "InventoryCallback",
     "item_keyboard",
     "ItemCallback"
+    "equipment_keyboard",
+    "EquipmentCallback"
 ]
