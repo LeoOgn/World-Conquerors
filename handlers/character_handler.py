@@ -1,7 +1,7 @@
 from services import CharacterService, InventoryService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import (character_keyboard, add_scores_keyboard, NewScores, CharacterCallback, AddScoresCallback)
+from keyboards import (character_keyboard, add_scores_keyboard, NewScores, CharacterCallback, AddScoresCallback, MainMenuCallback)
 from repositories import Character
 from keyboards import inventory_keyboard, equipment_keyboard
 
@@ -20,6 +20,14 @@ class CharacterHandler:
         await msg.answer_photo(
             photo=types.FSInputFile("images/Персонаж.png"), 
             caption=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}", 
+            reply_markup=character_keyboard(character.available_scores)
+        )
+
+    async def inline_character_handler(self, callback: types.CallbackQuery):
+        character = self.character_service.get_by_user_id(callback.from_user.id)
+        await callback.message.edit_media(
+            media=types.InputMediaPhoto(
+            media=types.FSInputFile("images/Персонаж.png"), caption=f"Данные о герое:\nУровень: {character.level}\nОпыт до следующего уровня: {character.experience}\nБаланс: {character.balance}\nСила: {character.streight}\nТелосложение: {character.physique}\nЛовкость: {character.agility}"),
             reply_markup=character_keyboard(character.available_scores)
         )
 

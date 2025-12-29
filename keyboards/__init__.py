@@ -7,6 +7,7 @@ from .add_scores_keyboard import add_scores_keyboard, AddScoresCallback, NewScor
 from .inventory_keyboard import inventory_keyboard, InventoryCallback
 from .item_keyboard import item_keyboard, ItemCallback
 from .equipment_keyboard import equipment_keyboard, EquipmentCallback
+from .inline_main_menu_keyboard import inline_main_menu_keyboard, MainMenuCallback
 
 
 
@@ -28,5 +29,7 @@ __all__ = [
     "item_keyboard",
     "ItemCallback"
     "equipment_keyboard",
-    "EquipmentCallback"
+    "EquipmentCallback",
+    "inline_main_menu_callback",
+    "MainMenuCallback"
 ]

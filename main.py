@@ -29,11 +29,11 @@ location_service = LocationService(location_repository, mob_repository)
 fight_service = FightService(mob_repository, character_repository)
 inventory_service = InventoryService(inventory_repository, item_repository, equipment_repository)
 
-start_handler = StartHandler(user_service, character_service)
 location_handler = LocationHandler(location_service, fight_service)
 fight_handler = FightHandler(fight_service, location_service, inventory_service)
 character_handler = CharacterHandler(character_service, inventory_service)
 inventory_handler = InventoryHandler(inventory_service, character_service)
+start_handler = StartHandler(user_service, character_service, character_handler, location_handler)
 
 command_router = CommandRouter(dp, start_handler)
 location_router = LocationsRouter(dp, location_handler)

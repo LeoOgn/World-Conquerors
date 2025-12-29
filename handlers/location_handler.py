@@ -1,7 +1,7 @@
 from services import LocationService, FightService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import locations_keyboard, LocationCallback, prefight_keyboard, PrefightCallback, fight_keyboard
+from keyboards import locations_keyboard, LocationCallback, prefight_keyboard, PrefightCallback, fight_keyboard, MainMenuCallback
 
 
 class LocationHandler:
@@ -14,6 +14,15 @@ class LocationHandler:
         locations = self.location_service.get_all()
         await msg.answer(
             "Выбери, путник, в какой локации будет твой путь.",
+            reply_markup=locations_keyboard(locations)
+        )
+
+    async def inline_location_menu(self, callback: types.CallbackQuery):
+        locations = self.location_service.get_all()
+
+        await callback.message.edit_media(
+            media=types.InputMediaPhoto(
+            media=types.FSInputFile("images/Распутье.jpg"), caption=f"Выбери, путник, в какой локации будет пролегать твой путь."),
             reply_markup=locations_keyboard(locations)
         )
     
