@@ -1,6 +1,8 @@
 from repositories import LocationRepository, MobRepository, Mob
 from random import randint
 
+from repositories.location_repository import Location
+
 
 class LocationService:
     def __init__(
@@ -19,3 +21,5 @@ class LocationService:
         i = randint(0, len(mobs) - 1)
         return mobs[i]
     
+    def get_by_id(self, location_id: int) -> Location:
+        return self.location_repo.get_by_id(location_id)

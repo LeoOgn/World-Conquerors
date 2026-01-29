@@ -39,3 +39,10 @@ class LocationRepository:
             Location(**location)
             for location in locations
         ]
+    
+    def get_by_id(self, location_id: int) -> Location:
+        sql = "SELECT * FROM locations WHERE id = %s"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (location_id,))
+        location = cursor.fetchone()
+        return Location(**location)
