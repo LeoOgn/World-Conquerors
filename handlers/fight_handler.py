@@ -1,7 +1,7 @@
 from services import FightService, LocationService, InventoryService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import FightCallback, fight_keyboard, prefight_keyboard
+from keyboards import FightCallback, fight_keyboard, prefight_keyboard, inline_main_menu_keyboard
 
 
 class FightHandler:
@@ -19,9 +19,20 @@ class FightHandler:
         if callback_data.action == "hit":
             fight_info = self.fight_service.on_hit(callback.from_user.id)
             if fight_info.status == "in_process":
-                await callback.message.edit_text(f"Вы нанесли удар, у противника осталось  {fight_info.mob_health} здоровья\nВам нанесли удар, у вас осталоcь {fight_info.character.current_health} здоровья", reply_markup=fight_keyboard())
+                # await callback.message.edit_text(f"Вы нанесли удар, у противника осталось  {fight_info.mob_health} здоровья\nВам нанесли удар, у вас осталоcь {fight_info.character.current_health} здоровья", reply_markup=fight_keyboard())
+
+                await callback.message.edit_media(
+                    media=types.InputMediaPhoto(
+                        media=types.FSInputFile("images/Распутье.jpg"), caption=f"Вы нанесли удар, у противника осталось  {fight_info.mob_health} здоровья\nВам нанесли удар, у вас осталоcь {fight_info.character.current_health} здоровья"), 
+                reply_markup=fight_keyboard())
+                
             elif fight_info.status == "draw":
-                await callback.message.edit_text(f"Вы убили вашего противника, но, к сожалению, тоже погибли!", reply_markup=None)
+                # await callback.message.edit_text(f"Вы убили вашего противника, но, к сожалению, тоже погибли!", reply_markup=None)
+
+                await callback.message.edit_media(
+                    media=types.InputMediaPhoto(
+                        media=types.FSInputFile("images/Город-столица.jpg"), caption=f"Вы убили вашего противника, но, к сожалению, тоже погибли!"), 
+                reply_markup=inline_main_menu_keyboard())
             elif fight_info.status == "win":
                 data = await state.get_data()
                 location_id = data.get("location_id", 1)
@@ -30,6 +41,17 @@ class FightHandler:
                 if fight_info.loot is not None:
                     for loot_item in fight_info.loot:
                         self.inventory_service.add_item(fight_info.character.id, loot_item)
-                await callback.message.edit_text(f"Поздравляем! Вы победили в битве! После сражения вы наткнулись на {mob.name}", reply_markup=prefight_keyboard(mob))
+                # await callback.message.edit_text(f"Поздравляем! Вы победили в битве! После сражения вы наткнулись на {mob.name}", reply_markup=prefight_keyboard(mob))
+
+                await callback.message.edit_media(
+                    media=types.InputMediaPhoto(
+                        media=types.FSInputFile("images/Распутье.jpg"), caption=f"Поздравляем! Вы победили в битве! После сражения вы наткнулись на {mob.name}"), 
+                reply_markup=prefight_keyboard(mob))
+
             elif fight_info.status == "loose":
-                await callback.message.edit_text(f"К сожалению, вам не хватило сил победить потивника, вы погибли!", reply_markup=None)
+                # await callback.message.edit_text(f"К сожалению, вам не хватило сил победить потивника, вы погибли!", reply_markup=None)
+
+                await callback.message.edit_media(
+                    media=types.InputMediaPhoto(
+                        media=types.FSInputFile("images/Город-столица.jpg"), caption=f"К сожалению, вам не хватило сил победить потивника, вы погибли!"), 
+                reply_markup=inline_main_menu_keyboard())

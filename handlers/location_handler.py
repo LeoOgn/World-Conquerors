@@ -1,7 +1,7 @@
 from services import LocationService, FightService
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from keyboards import locations_keyboard, LocationCallback, prefight_keyboard, PrefightCallback, fight_keyboard, MainMenuCallback
+from keyboards import locations_keyboard, LocationCallback, prefight_keyboard, PrefightCallback, fight_keyboard, MainMenuCallback, inline_main_menu_keyboard
 
 
 class LocationHandler:
@@ -60,13 +60,20 @@ class LocationHandler:
             data = await state.get_data()
             location_id = data.get("location_id")
             mob = self.location_service.get_random_mob(location_id)
-            await callback.message.edit_text(
-                f"Вы проигнорировали прошлого монстра и продолжили свой путь, путешествуя дальше, вы наткнулись на {mob.name} ({mob.level} уровень)",
+            # await callback.message.edit_text(
+            #     f"Вы проигнорировали прошлого монстра и продолжили свой путь, путешествуя дальше, вы наткнулись на {mob.name} ({mob.level} уровень)",
+            #     reply_markup=prefight_keyboard(mob)
+            # )
+            await callback.message.edit_media(
+                media=types.InputMediaPhoto(
+                media=types.FSInputFile("images/Распутье.jpg"), caption=f"Вы проигнорировали прошлого монстра и продолжили свой путь, путешествуя дальше, вы наткнулись на {mob.name} ({mob.level} уровень)"), 
                 reply_markup=prefight_keyboard(mob)
             )
 
-        await callback.message.edit_media(
-            media=types.InputMediaPhoto(
-            media=types.FSInputFile("images/Распутье.jpg"), caption=f"Вы проигнорировали прошлого монстра и продолжили свой путь, путешествуя дальше, вы наткнулись на {mob.name} ({mob.level} уровень)"),
-            reply_markup=prefight_keyboard()
-        )
+
+        elif callback_data.action == "return":
+            await callback.message.edit_media(
+                media=types.InputMediaPhoto(
+                media=types.FSInputFile("images/Город-столица.jpg"), caption=f"Орлион снова приветствует тебя, путник!"), 
+                reply_markup=inline_main_menu_keyboard()
+            )
