@@ -24,3 +24,5 @@ class EquipmentHandler:
                 ), 
                 reply_markup=character_keyboard(character.available_scores)
             )
+        elif callback_data.action == 'show':
+            ...
